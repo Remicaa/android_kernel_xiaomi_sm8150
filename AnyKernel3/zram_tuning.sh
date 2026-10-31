@@ -27,6 +27,12 @@ for boost in /sys/devices/system/cpu/cpufreq/policy*/schedutil/iowait_boost_enab
     fi
 done
 
+# Enable TCP BBR congestion control
+if [ -f /proc/sys/net/ipv4/tcp_congestion_control ]; then
+    echo bbr > /proc/sys/net/ipv4/tcp_congestion_control 2>/dev/null || true
+fi
+
+
 # If zram size is currently below 4.5GB, expand to 4.5GB (4718592000 bytes)
 TARGET_SIZE=4718592000 # 4.5 GiB
 CURRENT_SIZE=$(cat /sys/block/zram0/disksize 2>/dev/null)
