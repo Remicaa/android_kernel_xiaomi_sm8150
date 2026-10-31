@@ -53,3 +53,7 @@ echo "Build completed in $((ELAPSED / 60))m $((ELAPSED % 60))s"
 echo "Artifacts:"
 ls -lh "${OUT_DIR}/arch/arm64/boot/Image.gz" "${OUT_DIR}/arch/arm64/boot/dtbo.img" 2>/dev/null || true
 echo "============================================="
+
+echo "==> Packaging into AnyKernel3 flashable zip..."
+"${KERNEL_DIR}/package_kernel.sh"
+

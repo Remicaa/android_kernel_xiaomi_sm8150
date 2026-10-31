@@ -130,3 +130,6 @@ kernel/configs/android-*.cfg
 #
 Android.bp
 out/
+*.zip
+AnyKernel3/Image.gz
+AnyKernel3/dtbo.img
