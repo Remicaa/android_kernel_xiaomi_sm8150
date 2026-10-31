@@ -13,6 +13,20 @@ echo 0 > /proc/sys/vm/page-cluster
 echo 100 > /proc/sys/vm/swappiness
 echo 80 > /proc/sys/vm/vfs_cache_pressure
 
+# Configure BFQ I/O scheduler for UFS internal storage
+for queue in /sys/block/sd*/queue/scheduler; do
+    if [ -f "$queue" ]; then
+        echo bfq > "$queue" 2>/dev/null || echo mq-deadline > "$queue" 2>/dev/null
+    fi
+done
+
+# Ensure Schedutil iowait boosting is enabled across all CPU clusters
+for boost in /sys/devices/system/cpu/cpufreq/policy*/schedutil/iowait_boost_enable; do
+    if [ -f "$boost" ]; then
+        echo 1 > "$boost" 2>/dev/null
+    fi
+done
+
 # If zram size is currently below 4.5GB, expand to 4.5GB (4718592000 bytes)
 TARGET_SIZE=4718592000 # 4.5 GiB
 CURRENT_SIZE=$(cat /sys/block/zram0/disksize 2>/dev/null)
