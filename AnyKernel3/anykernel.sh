@@ -38,3 +38,13 @@ dump_boot;
 
 write_boot;
 ## end boot install
+
+# install zram tuning service into /data/adb/service.d if available
+if [ -d /data/adb ]; then
+  ui_print " ";
+  ui_print "- Installing ZRAM 4.5GB tuning script to /data/adb/service.d/...";
+  mkdir -p /data/adb/service.d;
+  cp -f $home/zram_tuning.sh /data/adb/service.d/zram_tuning.sh;
+  chmod 755 /data/adb/service.d/zram_tuning.sh;
+  chown 0:0 /data/adb/service.d/zram_tuning.sh;
+fi
