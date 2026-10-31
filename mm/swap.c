@@ -1052,15 +1052,11 @@ EXPORT_SYMBOL(pagevec_lookup_range_nr_tag);
  */
 void __init swap_setup(void)
 {
-	unsigned long megs = totalram_pages >> (20 - PAGE_SHIFT);
-
-	/* Use a smaller cluster for small-memory machines */
-	if (megs < 16)
-		page_cluster = 2;
-	else
-		page_cluster = 3;
 	/*
-	 * Right now other parts of the system means that we
-	 * _really_ don't want to cluster much more
+	 * On modern mobile/embedded systems using zRAM, readahead has a
+	 * negative performance impact because there is no rotational seek penalty,
+	 * and decompressing unused speculative pages wastes CPU cycles and RAM.
+	 * Default to 0 for non-rotational swap.
 	 */
+	page_cluster = 0;
 }
