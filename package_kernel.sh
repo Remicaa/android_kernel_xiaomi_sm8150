@@ -4,7 +4,7 @@ set -e
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT_DIR="${PROJECT_DIR}/out"
 AK3_DIR="${PROJECT_DIR}/AnyKernel3"
-ZIP_NAME="nabu-kernel-fresh-thinlto.zip"
+ZIP_NAME="${ZIP_NAME:-nabu-kernel-fresh-thinlto-bakasu.zip}"
 
 if [ ! -f "${OUT_DIR}/arch/arm64/boot/Image.gz" ]; then
     echo "ERROR: Kernel image not found in ${OUT_DIR}/arch/arm64/boot/Image.gz"
