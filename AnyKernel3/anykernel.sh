@@ -40,6 +40,7 @@ write_boot;
 ## end boot install
 
 # install zram tuning service into /data/adb/service.d if available
+mount /data 2>/dev/null;
 if [ -d /data/adb ]; then
   ui_print " ";
   ui_print "- Installing ZRAM 4.5GB tuning script to /data/adb/service.d/...";

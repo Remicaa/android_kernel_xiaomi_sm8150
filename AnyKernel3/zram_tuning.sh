@@ -10,7 +10,7 @@ done
 echo 0 > /proc/sys/vm/page-cluster
 
 # Optimal swappiness & cache pressure for ZSTD zram
-echo 120 > /proc/sys/vm/swappiness
+echo 100 > /proc/sys/vm/swappiness
 echo 80 > /proc/sys/vm/vfs_cache_pressure
 
 # If zram size is currently below 4.5GB, expand to 4.5GB (4718592000 bytes)
