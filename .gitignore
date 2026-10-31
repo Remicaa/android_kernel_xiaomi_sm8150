@@ -133,3 +133,4 @@ out/
 *.zip
 AnyKernel3/Image.gz
 AnyKernel3/dtbo.img
+stock_images/
