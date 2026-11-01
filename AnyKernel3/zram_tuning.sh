@@ -32,6 +32,17 @@ if [ -f /proc/sys/net/ipv4/tcp_congestion_control ]; then
     echo bbr > /proc/sys/net/ipv4/tcp_congestion_control 2>/dev/null || true
 fi
 
+# Ensure /data/property permissions remain secure for Android init persistence
+if [ -f /data/property/persistent_properties ]; then
+    chmod 600 /data/property/persistent_properties 2>/dev/null || true
+    chown 0:0 /data/property/persistent_properties 2>/dev/null || true
+fi
+chmod 700 /data/property 2>/dev/null || true
+chown 0:0 /data/property 2>/dev/null || true
+
+# Disable auto_time_zone on Wi-Fi only tablet to prevent fallback to GMT
+settings put global auto_time_zone 0 2>/dev/null || true
+
 
 # If zram size is currently below 4GB, expand to 4.5GB (4718592000 bytes)
 TARGET_SIZE=4718592000 # 4.5 GiB
