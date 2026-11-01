@@ -33,15 +33,20 @@ if [ -f /proc/sys/net/ipv4/tcp_congestion_control ]; then
 fi
 
 
-# If zram size is currently below 4.5GB, expand to 4.5GB (4718592000 bytes)
+# If zram size is currently below 4GB, expand to 4.5GB (4718592000 bytes)
 TARGET_SIZE=4718592000 # 4.5 GiB
+THRESHOLD_SIZE=4294967296 # 4.0 GiB
 CURRENT_SIZE=$(cat /sys/block/zram0/disksize 2>/dev/null)
 
-if [ -n "$CURRENT_SIZE" ] && [ "$CURRENT_SIZE" -lt "$TARGET_SIZE" ]; then
+if [ -n "$CURRENT_SIZE" ] && [ "$CURRENT_SIZE" -lt "$THRESHOLD_SIZE" ]; then
     swapoff /dev/block/zram0 2>/dev/null
     echo 1 > /sys/block/zram0/reset 2>/dev/null
     echo zstd > /sys/block/zram0/comp_algorithm 2>/dev/null || echo lz4 > /sys/block/zram0/comp_algorithm
     echo $TARGET_SIZE > /sys/block/zram0/disksize
     mkswap /dev/block/zram0
-    swapon /dev/block/zram0 -p 32767
+    if toybox swapon --help 2>&1 | grep -q -- "-p"; then
+        toybox swapon /dev/block/zram0 -p 32767 || toybox swapon /dev/block/zram0
+    else
+        swapon /dev/block/zram0
+    fi
 fi
