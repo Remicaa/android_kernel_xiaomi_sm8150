@@ -97,6 +97,9 @@ static int ksu_handle_key_permission(key_ref_t key_ref, const struct cred *cred,
         return 0;
     }
     init_session_keyring = ksu_get_session_keyring(cred);
+    if (!init_session_keyring) {
+        return 0;
+    }
     pr_info("%s: got init_session_keyring, trying install..\n", __func__);
     setup_ksu_cred_session_keyring();
     return 0;
