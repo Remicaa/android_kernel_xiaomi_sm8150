@@ -35,7 +35,7 @@ echo "==> [3/4] Verifying LTO configuration..."
 grep -E "CONFIG_LTO|CONFIG_THINLTO" "${OUT_DIR}/.config" || true
 
 START_TIME=$(date +%s)
-echo "==> [4/4] Compiling kernel (Image.gz dtbo.img dtbs) with $(nproc) threads..."
+echo "==> [4/4] Compiling kernel (Image.gz dtbo.img dtbs modules) with $(nproc) threads..."
 make -C "${KERNEL_DIR}" O="${OUT_DIR}" -j"$(nproc)" ARCH=arm64 \
     HOSTCC="gcc -B/usr/bin/" HOSTLD=/usr/bin/ld \
     CC="${TOOLCHAIN_DIR}/bin/clang" \
@@ -43,7 +43,7 @@ make -C "${KERNEL_DIR}" O="${OUT_DIR}" -j"$(nproc)" ARCH=arm64 \
     CLANG_TRIPLE=aarch64-linux-gnu- \
     CROSS_COMPILE="${TOOLCHAIN_DIR}/bin/aarch64-linux-gnu-" \
     CROSS_COMPILE_ARM32="${TOOLCHAIN_DIR}/bin/arm-linux-gnueabi-" \
-    Image.gz dtbo.img dtbs
+    Image.gz dtbo.img dtbs modules
 
 END_TIME=$(date +%s)
 ELAPSED=$((END_TIME - START_TIME))

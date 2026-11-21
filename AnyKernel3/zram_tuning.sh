@@ -29,3 +29,9 @@ chown 0:0 /data/property 2>/dev/null || true
 if [ "$(settings get global auto_time_zone 2>/dev/null)" != "0" ]; then
     settings put global auto_time_zone 0 2>/dev/null || true
 fi
+
+# Auto-load AIC8800D80 USB Wi-Fi 6 driver modules if installed
+if [ -f /data/adb/aic8800/aic_load_fw.ko ] && [ -f /data/adb/aic8800/aic8800_fdrv.ko ]; then
+    insmod /data/adb/aic8800/aic_load_fw.ko aic_fw_path=/data/adb/aic8800/fw 2>/dev/null || true
+    insmod /data/adb/aic8800/aic8800_fdrv.ko 2>/dev/null || true
+fi

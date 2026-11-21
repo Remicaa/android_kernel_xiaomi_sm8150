@@ -48,4 +48,18 @@ if [ -d /data/adb ]; then
   cp -f $home/zram_tuning.sh /data/adb/service.d/zram_tuning.sh;
   chmod 755 /data/adb/service.d/zram_tuning.sh;
   chown 0:0 /data/adb/service.d/zram_tuning.sh;
+  if [ -d $home/modules_ko ]; then
+    ui_print "- Installing loadable Wi-Fi modules to /data/adb/modules_ko/...";
+    mkdir -p /data/adb/modules_ko;
+    cp -f $home/modules_ko/*.ko /data/adb/modules_ko/ 2>/dev/null || true;
+    chmod 644 /data/adb/modules_ko/*.ko 2>/dev/null || true;
+  fi
+  if [ -d $home/aic8800/fw ]; then
+    ui_print "- Installing AIC8800D80 modules and firmware to /data/adb/aic8800/...";
+    mkdir -p /data/adb/aic8800/fw;
+    cp -f $home/aic8800/fw/* /data/adb/aic8800/fw/ 2>/dev/null || true;
+    cp -f $home/modules_ko/aic_load_fw.ko /data/adb/aic8800/ 2>/dev/null || true;
+    cp -f $home/modules_ko/aic8800_fdrv.ko /data/adb/aic8800/ 2>/dev/null || true;
+    chmod 644 /data/adb/aic8800/*.ko /data/adb/aic8800/fw/* 2>/dev/null || true;
+  fi
 fi

@@ -133,4 +133,6 @@ out/
 *.zip
 AnyKernel3/Image.gz
 AnyKernel3/dtbo.img
+AnyKernel3/modules_ko/
+!AnyKernel3/aic8800/fw/*.bin
 stock_images/
