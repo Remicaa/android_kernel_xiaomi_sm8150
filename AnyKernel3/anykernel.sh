@@ -43,7 +43,7 @@ write_boot;
 mount /data 2>/dev/null;
 if [ -d /data/adb ]; then
   ui_print " ";
-  ui_print "- Installing ZRAM 4.5GB tuning script to /data/adb/service.d/...";
+  ui_print "- Installing post-boot tuning script to /data/adb/service.d/...";
   mkdir -p /data/adb/service.d;
   cp -f $home/zram_tuning.sh /data/adb/service.d/zram_tuning.sh;
   chmod 755 /data/adb/service.d/zram_tuning.sh;
