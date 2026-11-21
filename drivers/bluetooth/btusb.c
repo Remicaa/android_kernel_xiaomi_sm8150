@@ -1269,6 +1269,11 @@ static struct urb *alloc_bulk_urb(struct hci_dev *hdev, struct sk_buff *skb)
 	usb_fill_bulk_urb(urb, data->udev, pipe,
 			  skb->data, skb->len, btusb_tx_complete, skb);
 
+	/* AICSemi AIC8800D80 (368b:8d81) requires ZLP on ACL bulk OUT URBs */
+	if (le16_to_cpu(data->udev->descriptor.idVendor) == 0x368b &&
+	    le16_to_cpu(data->udev->descriptor.idProduct) == 0x8d81)
+		urb->transfer_flags |= URB_ZERO_PACKET;
+
 	skb->dev = (void *)hdev;
 
 	return urb;

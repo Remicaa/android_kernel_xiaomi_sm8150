@@ -1,0 +1,6 @@
+config AIC8800_WLAN_SUPPORT
+	tristate "AIC8800 WLAN Support"
+	depends on m && USB && CFG80211 && AIC_LOADFW_SUPPORT
+	help
+	  This is support for AIC8800/AIC8800D80 USB Wi-Fi 6 driver with monitor
+	  mode and radiotap packet injection support.

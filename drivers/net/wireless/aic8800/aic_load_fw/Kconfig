@@ -1,0 +1,5 @@
+config AIC_LOADFW_SUPPORT
+	tristate "AIC8800 Load Firmware Support"
+	depends on m && USB
+	help
+	  This is support for AIC8800 USB firmware loader module.
