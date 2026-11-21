@@ -5,7 +5,8 @@ PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT_DIR="${PROJECT_DIR}/out"
 AK3_DIR="${PROJECT_DIR}/AnyKernel3"
 TOOLCHAIN_DIR="${PROJECT_DIR}/../proton-clang"
-ZIP_NAME="${ZIP_NAME:-nabu-kernel-docker-nethunter.zip}"
+DATE_TAG="$(date +%d%m%Y)"
+ZIP_NAME="${ZIP_NAME:-nabu-kernel-docker-nethunter_${DATE_TAG}.zip}"
 
 if [ ! -f "${OUT_DIR}/arch/arm64/boot/Image.gz" ]; then
     echo "ERROR: Kernel image not found in ${OUT_DIR}/arch/arm64/boot/Image.gz"
